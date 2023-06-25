@@ -1,23 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+
+  // Create a joke state
+  const [joke, setJoke] = useState('');
+
+  // Create a function to fetch a joke from the API
+  const generateJoke = () => {
+    fetch('https://icanhazdadjoke.com/', {
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => response.json())
+      .then(data => setJoke(data.joke))
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className='Joke-div'>
+        <h1>Joke generator app</h1>
+        <p>Click the button to generate a joke</p>
+        <button className='Generate-button' onClick={generateJoke} >Generate Joke</button>
+        <h2>Here is your joke</h2>
+        <div>
+          {joke}
+        </div>
+      </div>
       </header>
+      
     </div>
   );
 }
